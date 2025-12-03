@@ -89,7 +89,6 @@ Figure 3. PCA Variable Loadings Vectors.
 The win rate heatmap in PCA space shows that the "winningest" players tend to cluster in regions with high PC2 scores (top of the chart). The top 5 ranked players (shown in Figure 2) also align with these high-win-rate regions.
 
 ```{r win-rate-plot, dpi=100}
-```{r win-rate-plot, dpi=100}
 knitr::include_graphics("plots/combined_cluster_win_rate_panels.png")
 ```
 Figure 4. Player Win Rates in PCA Space by Tour.
@@ -106,7 +105,7 @@ These players play a "power game" more typical of the ATP tour.
 *   **Aces:** They hit significantly more Aces (Avg 3.36) than typical WTA players (Avg 2.03).
 *   **Serve Dominance:** They win significantly more points on their first serve (33.5%) compared to the WTA average (26.4%), mirroring ATP efficacy.
 
-```{r miscluster-combined"}
+```{r miscluster-combined}
 knitr::include_graphics("plots/miscluster_combined_panel.png")
 ```
 Figure 5. Comparison of Service Metrics for Correct vs. Mis-clustered Players. (A) Distribution of Aces per Match. (B) Distribution of First Serve Points Won.
