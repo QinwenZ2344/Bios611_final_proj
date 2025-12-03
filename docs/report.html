@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="BIOS 611 Project" />
+
+<meta name="date" content="2025-12-02" />
+
+<title>Analysis of WTA &amp; ATP Match Statistics (2020-2024)</title>
+
+<script src="report_files/header-attrs-2.30/header-attrs.js"></script>
+<script src="report_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="report_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="report_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="report_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="report_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="report_files/navigation-1.1/tabsets.js"></script>
+<link href="report_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="report_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Analysis of WTA &amp; ATP Match Statistics
+(2020-2024)</h1>
+<h4 class="author">BIOS 611 Project</h4>
+<h4 class="date">2025-12-02</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#data-overview" id="toc-data-overview"><span
+class="toc-section-number">1</span> Data Overview</a></li>
+<li><a
+href="#research-question-a-can-unsupervised-learning-distinguish-gender"
+id="toc-research-question-a-can-unsupervised-learning-distinguish-gender"><span
+class="toc-section-number">2</span> Research Question A: Can
+Unsupervised Learning Distinguish Gender?</a>
+<ul>
+<li><a href="#pca-results" id="toc-pca-results"><span
+class="toc-section-number">2.1</span> PCA Results</a></li>
+<li><a href="#clustering-performance"
+id="toc-clustering-performance"><span
+class="toc-section-number">2.2</span> Clustering Performance</a></li>
+</ul></li>
+<li><a href="#research-question-b-what-kind-of-player-wins"
+id="toc-research-question-b-what-kind-of-player-wins"><span
+class="toc-section-number">3</span> Research Question B: What kind of
+player wins?</a>
+<ul>
+<li><a href="#interpretation-of-pcs-via-loadings-plot"
+id="toc-interpretation-of-pcs-via-loadings-plot"><span
+class="toc-section-number">3.1</span> Interpretation of PCs via Loadings
+Plot</a></li>
+<li><a href="#correlation-with-winning"
+id="toc-correlation-with-winning"><span
+class="toc-section-number">3.2</span> Correlation with Winning</a></li>
+<li><a href="#visual-evidence" id="toc-visual-evidence"><span
+class="toc-section-number">3.3</span> Visual Evidence</a></li>
+</ul></li>
+<li><a href="#research-question-c-mis-clustered-player-analysis"
+id="toc-research-question-c-mis-clustered-player-analysis"><span
+class="toc-section-number">4</span> Research Question C: Mis-clustered
+Player Analysis</a>
+<ul>
+<li><a href="#why-are-they-mis-clustered"
+id="toc-why-are-they-mis-clustered"><span
+class="toc-section-number">4.1</span> Why are they mis-clustered?</a>
+<ul>
+<li><a href="#wta-in-atp-cluster-n16"
+id="toc-wta-in-atp-cluster-n16"><span
+class="toc-section-number">4.1.1</span> WTA in ATP Cluster
+(n=16)</a></li>
+<li><a href="#atp-in-wta-cluster-n96"
+id="toc-atp-in-wta-cluster-n96"><span
+class="toc-section-number">4.1.2</span> ATP in WTA Cluster
+(n=96)</a></li>
+<li><a href="#ranking-scores" id="toc-ranking-scores"><span
+class="toc-section-number">4.1.3</span> Ranking scores</a></li>
+</ul></li>
+<li><a href="#visual-summary-of-mis-clusters"
+id="toc-visual-summary-of-mis-clusters"><span
+class="toc-section-number">4.2</span> Visual Summary of
+Mis-clusters</a></li>
+<li><a href="#summary" id="toc-summary"><span
+class="toc-section-number">4.3</span> Summary</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion"><span
+class="toc-section-number">5</span> Conclusion</a></li>
+<li><a href="#future-direction-and-limitations"
+id="toc-future-direction-and-limitations"><span
+class="toc-section-number">6</span> Future Direction and
+Limitations</a></li>
+</ul>
+</div>
+
+<div id="data-overview" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Data Overview</h1>
+<p>This analysis explores match statistics from the ATP (Men’s) and WTA
+(Women’s) tours from 2020 to 2024. The goal is to identify gender-based
+performance patterns, understand factors contributing to player success,
+and investigate outliers using unsupervised learning.</p>
+<ul>
+<li><strong>Data Sources:</strong> Combined match data from ATP and WTA
+CSV files (2020-2024).</li>
+<li><strong>Sample Size:</strong>
+<ul>
+<li>Total Players Analyzed: <strong>784</strong> (after filtering for
+players with <span class="math inline">\(\ge\)</span> 5 matches)</li>
+<li>Breakdown: <strong>394</strong> ATP players, <strong>390</strong>
+WTA players.</li>
+<li>Total Matches Processed: <strong>25,140</strong></li>
+</ul></li>
+<li><strong>Features Analyzed:</strong> Averages of Aces, Double Faults,
+Serve Points, 1st Serves In/Won, 2nd Serves Won, Break Points
+Saved/Faced.</li>
+</ul>
+</div>
+<div
+id="research-question-a-can-unsupervised-learning-distinguish-gender"
+class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Research Question A:
+Can Unsupervised Learning Distinguish Gender?</h1>
+<p><strong>Method:</strong> Principal Component Analysis (PCA) followed
+by K-Means Clustering (K=2) on average game statistics.</p>
+<div id="pca-results" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> PCA Results</h2>
+<p>The model effectively separates gender based on game statistics. The
+variables used in this analysis were: <strong>Average Aces, Double
+Faults, Serve Points, 1st Serves In %, 1st Serve Points Won %, 2nd Serve
+Points Won %, Serve Games, Break Points Saved, and Break Points
+Faced</strong>.</p>
+<ul>
+<li><strong>PC1 (50.4% variance):</strong> Heavily driven by
+<strong>Serve Power/Volume</strong> (high loadings for Aces, Serve
+Games, 1st Serve Won).</li>
+<li><strong>PC2 (25.6% variance):</strong> Relates to
+<strong>Pressure/Resilience</strong> (Break Points Faced/Saved).</li>
+</ul>
+<p><img src="plots/wta_atp_pca_scree_plot.png" width="80%" style="display: block; margin: auto;" />
+Figure 1. Scree Plot showing Variance Explained by Principal
+Components.</p>
+</div>
+<div id="clustering-performance" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Clustering
+Performance</h2>
+<p>The unsupervised clustering algorithm (K-Means, K=2) achieved a high
+degree of accuracy in distinguishing player gender solely based on match
+statistics.</p>
+<p><strong>Table 1. Contingency Table of Clustering Results by
+Gender</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Cluster 1 (ATP-Leaning)</th>
+<th align="center">Cluster 2 (WTA-Leaning)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>ATP</strong></td>
+<td align="center">298 (Correct)</td>
+<td align="center">96 (Mis-clustered)</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>WTA</strong></td>
+<td align="center">16 (Mis-clustered)</td>
+<td align="center">374 (Correct)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Accuracy:</strong> The model correctly classified
+<strong>672 out of 784</strong> players, achieving an overall accuracy
+of <strong>85.7%</strong>.</li>
+<li><strong>Cluster 1 (ATP-Leaning):</strong> Predominantly ATP players
+(298 vs 16 WTA).</li>
+<li><strong>Cluster 2 (WTA-Leaning):</strong> Predominantly WTA players
+(374 vs 96 ATP).</li>
+</ul>
+<p>This confirms that “men’s tennis” and “women’s tennis” have distinct
+statistical signatures, primarily driven by serve dominance.</p>
+<p><img src="plots/combined_cluster_PC1_vs_PC2.png" width="80%" style="display: block; margin: auto;" />
+Figure 2. K-Means Clustering in PCA Space (PC1 vs PC2).</p>
+</div>
+</div>
+<div id="research-question-b-what-kind-of-player-wins"
+class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Research Question B:
+What kind of player wins?</h1>
+<p><strong>Method:</strong> Correlation and Regression Analysis of Win
+Rate against Principal Components.</p>
+<div id="interpretation-of-pcs-via-loadings-plot" class="section level2"
+number="3.1">
+<h2><span class="header-section-number">3.1</span> Interpretation of PCs
+via Loadings Plot</h2>
+<p><img src="plots/pca_loadings_PC1_PC2.png" width="80%" style="display: block; margin: auto;" />
+Figure 3. PCA Variable Loadings Vectors.</p>
+<ul>
+<li><strong>PC1 (Serve Quality/Volume):</strong> In the loadings plot,
+variables like Aces (<code>avg_ace</code>), Serve Games
+(<code>avg_sv_gms</code>), and First Serve Points Won
+(<code>avg_first_won</code>) cluster heavily on the
+<strong>negative</strong> side (left). This means a <em>lower</em> (more
+negative) PC1 score represents stronger, more dominant serving
+stats.</li>
+<li><strong>PC2 (Pressure/Resilience):</strong> The variables Break
+Points Faced (<code>avg_bp_faced</code>) and Saved
+(<code>avg_bp_saved</code>) have strong <strong>negative</strong>
+loadings (bottom of the plot). Consequently, a <em>higher</em>
+(positive) PC2 score indicates a player who faces <em>fewer</em> break
+points—a hallmark of dominance and control.</li>
+</ul>
+</div>
+<div id="correlation-with-winning" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Correlation with
+Winning</h2>
+<ul>
+<li><strong>PC1 vs Win Rate:</strong> <span class="math inline">\(r =
+-0.1280\)</span> (<span class="math inline">\(p &lt; 0.001\)</span>).
+<ul>
+<li>Since strong serving corresponds to negative PC1, the negative
+correlation confirms that better servers tend to win more, but the
+relationship is relatively weak.</li>
+</ul></li>
+<li><strong>PC2 vs Win Rate:</strong> <span class="math inline">\(r =
+0.2794\)</span> (<span class="math inline">\(p &lt; 1e-15\)</span>).
+<ul>
+<li>The strong positive correlation means that players with high PC2
+scores (those who face fewer break points) are significantly more likely
+to win.</li>
+</ul></li>
+<li><strong>Key Insight:</strong> While serve power (PC1) matters, the
+ability to control the match and avoid break points (PC2) is the
+stronger statistical driver of victory.</li>
+</ul>
+</div>
+<div id="visual-evidence" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Visual Evidence</h2>
+<p>The win rate heatmap in PCA space shows that the “winningest” players
+tend to cluster in regions with high PC2 scores (top of the chart). The
+top 5 ranked players (shown in Figure 2) also align with these
+high-win-rate regions.</p>
+<p><img src="plots/combined_cluster_win_rate_panels.png" width="80%" style="display: block; margin: auto;" />
+<img src="plots/combined_cluster_win_rate_panels.png" width="80%" style="display: block; margin: auto;" />
+Figure 4. Player Win Rates in PCA Space by Tour.</p>
+</div>
+</div>
+<div id="research-question-c-mis-clustered-player-analysis"
+class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Research Question C:
+Mis-clustered Player Analysis</h1>
+<p><strong>Method:</strong> Analysis of the 112 players (14%) who were
+“misclassified” by the clustering algorithm (e.g., ATP players in the
+“WTA-like” cluster).</p>
+<div id="why-are-they-mis-clustered" class="section level2"
+number="4.1">
+<h2><span class="header-section-number">4.1</span> Why are they
+mis-clustered?</h2>
+<div id="wta-in-atp-cluster-n16" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> WTA in ATP Cluster
+(n=16)</h3>
+<p>These players play a “power game” more typical of the ATP tour.</p>
+<ul>
+<li><strong>Aces:</strong> They hit significantly more Aces (Avg 3.36)
+than typical WTA players (Avg 2.03).</li>
+<li><strong>Serve Dominance:</strong> They win significantly more points
+on their first serve (33.5%) compared to the WTA average (26.4%),
+mirroring ATP efficacy.</li>
+</ul>
+<p><img src="plots/miscluster_combined_panel.png" width="80%" style="display: block; margin: auto;" />
+Figure 5. Comparison of Service Metrics for Correct vs. Mis-clustered
+Players. (A) Distribution of Aces per Match. (B) Distribution of First
+Serve Points Won.</p>
+</div>
+<div id="atp-in-wta-cluster-n96" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> ATP in WTA Cluster
+(n=96)</h3>
+<p>These players have statistical profiles closer to the WTA
+average.</p>
+<ul>
+<li><strong>Aces:</strong> They hit significantly fewer Aces (Avg 3.64)
+than typical ATP players (Avg 6.08).</li>
+<li><strong>Serve Effectiveness:</strong> Their points won on first
+serve (27.9) drops drastically from the ATP standard (36.4) to near-WTA
+levels (26.4), indicating a lack of the “free points” usually associated
+with men’s tennis.</li>
+<li><strong>Performance Impact:</strong> These “mis-clustered” ATP
+players have a significantly <strong>lower win rate</strong> (35%)
+compared to standard ATP players (42%).</li>
+</ul>
+</div>
+<div id="ranking-scores" class="section level3" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Ranking scores</h3>
+<p>As shown in Figure 6, ATP players assigned to the “WTA-style” cluster
+have substantially lower ranking points than correctly clustered ATP
+players. This pattern is consistent with their match statistics: weaker
+serve performance and fewer aces make these ATP players resemble WTA
+profiles, and this “WTA-style” play is penalized heavily in the men’s
+game. On the women’s side, the pattern looks different. WTA players
+assigned to the “ATP-style” cluster do not suffer a corresponding drop;
+in fact, their ranking points are comparable to correctly clustered WTA
+players. This indicates that adopting an “ATP-style” power-serve profile
+is not a disadvantageor WTA players, whereas adopting a “WTA-style”
+lower-serve-impact profile is a clear disadvantage for ATP players.</p>
+<p><img src="plots/miscluster_points_boxplot.png" width="80%" style="display: block; margin: auto;" />
+Figure 6. Distribution of Average Ranking Points by Cluster Group. Note
+that ATP players in the WTA cluster (“ATP in WTA Cluster”) show a trend
+towards lower ranking points compared to the correct ATP group.</p>
+</div>
+</div>
+<div id="visual-summary-of-mis-clusters" class="section level2"
+number="4.2">
+<h2><span class="header-section-number">4.2</span> Visual Summary of
+Mis-clusters</h2>
+<p><img src="plots/combined_cluster_misclustered.png" width="80%" style="display: block; margin: auto;" />
+Figure 7. Visualizing Mis-clustered Players in PCA Space.</p>
+</div>
+<div id="summary" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Summary</h2>
+<p>The mis-cluster analysis reveals that these players are not random
+errors but “functional outliers.” ATP players in the WTA cluster lack
+the typical serve weapons of men’s tennis, which correlates with lower
+rankings and win rates. However, the pattern is not evident in women
+players. This difference in ranking point impact highlights a key
+asymmetry: while the “ATP style” (high serve dominance) is not a harm in
+the women’s game, playing a “WTA style” (lower serve impact) in the
+men’s game is often a competitive disadvantage.</p>
+</div>
+</div>
+<div id="conclusion" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Conclusion</h1>
+<p>In this study, we successfully employed an unsupervised learning
+approach (PCA + K-Means Clustering) to distinguish between ATP and WTA
+players with <strong>85.7% accuracy</strong> solely based on in-match
+statistics. This high accuracy validates that the two tours have
+distinct statistical structures, primarily defined by serve power and
+volume (PC1). However, the analysis also highlighted that success in
+both tours is unified by a common factor: the ability to minimize break
+point opportunities (PC2). The players who defied the clustering
+algorithm provided the most interesting insights—demonstrating that
+“gendered” styles of play are fluid, and adopting the dominant traits of
+the opposite tour (like high serve power for women) can be a winning
+strategy.</p>
+</div>
+<div id="future-direction-and-limitations" class="section level1"
+number="6">
+<h1><span class="header-section-number">6</span> Future Direction and
+Limitations</h1>
+<ol style="list-style-type: decimal">
+<li><strong>Variable Selection:</strong> The current analysis relied on
+a limited set of aggregate match statistics (Aces, DFs, Serve Points,
+etc.). Future work could incorporate more granular data such as rally
+length, return points won, and unforced error counts to create a more
+comprehensive player profile.</li>
+<li><strong>Age Effect:</strong> This study did not control for player
+age. Age could be a confounding factor, particularly for the
+“mis-clustered” ATP players (who might be younger/developing or
+older/declining). Incorporating age as a variable could refine the
+clustering and performance analysis.</li>
+</ol>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+.DS_Store
+.Rhistory
+*.txt
+*.pptx
+*.pdf
+plots/
