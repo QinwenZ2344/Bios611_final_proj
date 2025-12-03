@@ -40,10 +40,10 @@ This project uses Docker to ensure a reproducible analysis environment.
 3.  **Run the Container:**
     To run the analysis and ensure that generated reports/plots are saved back to your local machine, mount the current directory to `/work` inside the container:
     ```bash
-    docker run --rm -v "$(pwd):/work" -it bios611-project /bin/bash
+    docker run -v "$(pwd):/home/rstudio" -e PASSWORD='yourpassword' -p 8787:8787 qinwen611 
     ```
-    *   `--rm`: Automatically remove the container when you exit.
-    *   `-v "$(pwd):/work"`: Mounts your current folder to `/work` inside the container so you can access the output files.
+
+    *   `-v "$(pwd):/work"`: You can use this to mount your current folder to `/work` inside the container so you can access the output files. 
 
 ## Building the Report
 
