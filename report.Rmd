@@ -60,7 +60,7 @@ This confirms that "men's tennis" and "women's tennis" have distinct statistical
 ```{r cluster-plot}
 knitr::include_graphics("plots/combined_cluster_PC1_vs_PC2.png")
 ```
-Figure 2. K-Means Clustering in PCA Space (PC1 vs PC2).
+Figure 2. K-Means Clustering in PCA Space (PC1 vs PC2). Top 5 players in WTA and ATP labeled.
 
 # Research Question B: What kind of player wins?
 
