@@ -1,8 +1,6 @@
 # Load necessary libraries
 if (!require("tidyverse")) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
-if (!require("cowplot")) install.packages("cowplot", repos = "http://cran.us.r-project.org") # For combining plots
 library(tidyverse)
-library(cowplot)
 
 # Define file paths
 data_dir <- "data"
@@ -281,12 +279,17 @@ p_points <- ggplot(player_data, aes(x = group_label, y = avg_points, fill = sex)
     y = "Avg Ranking Points"
   )
 
-# Combine plots into one panel (A and B only)
-combined_plot <- plot_grid(p_box, p_sv_won, ncol = 2, align = 'h')
-
-# Save combined plot (A & B)
+# Combine plots into one panel (A and B only) using grid
 output_plot_file <- "plots/miscluster_combined_panel.png"
-ggsave(output_plot_file, combined_plot, width = 12, height = 6)
+
+# Use png device directly to combine plots with grid
+png(output_plot_file, width = 12, height = 6, units = "in", res = 300)
+grid::grid.newpage()
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(1, 2)))
+print(p_box, vp = grid::viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(p_sv_won, vp = grid::viewport(layout.pos.row = 1, layout.pos.col = 2))
+invisible(dev.off())
+
 message("Saved combined panel plot to ", output_plot_file)
 
 # Save Points plot (C) separately
