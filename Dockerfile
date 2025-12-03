@@ -13,7 +13,7 @@ RUN mkdir -p /usr/local/lib/R/site-library && \
     chmod -R 755 /usr/local/lib/R/site-library
 
 # Install required R packages into site-library
-RUN R -e "install.packages(c('tidyverse','cluster','cowplot'), lib='/usr/local/lib/R/site-library', repos='https://cloud.r-project.org')"
+RUN R -e "install.packages(c('tidyverse','cluster','cowplot','pagedown'), lib='/usr/local/lib/R/site-library', repos='https://cloud.r-project.org')"
 
 WORKDIR /work
 
