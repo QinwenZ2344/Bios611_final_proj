@@ -62,7 +62,7 @@ message("Loading Ranking Data...")
 # Helper to get average points
 get_avg_points <- function(path, sex_label) {
   if(!file.exists(path)) return(NULL)
-  df <- read_csv(path, show_col_types = FALSE)
+  df <- read_csv(path)
   
   # Calculate average points per player
   df_summ <- df %>%

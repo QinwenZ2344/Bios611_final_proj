@@ -230,7 +230,7 @@ message("Adding Rank Level Analysis...")
 # Helper to load rankings
 get_player_ranks <- function(path) {
   if(!file.exists(path)) return(NULL)
-  read_csv(path, show_col_types = FALSE) %>%
+  read_csv(path) %>%
     group_by(player) %>%
     summarise(best_rank = min(rank, na.rm = TRUE)) %>%
     mutate(player_id = as.character(player)) %>%
@@ -301,7 +301,7 @@ message("Saved mis-clustered plot to plots/combined_cluster_misclustered.png")
 # --- Identify Top Players for Labeling ---
 # Function to get top N players IDs from rankings
 get_top_ids <- function(rank_path, n=5) {
-  rankings <- read_csv(rank_path, show_col_types = FALSE)
+  rankings <- read_csv(rank_path)
   latest_date <- max(rankings$ranking_date)
   rankings %>%
     filter(ranking_date == latest_date) %>%
