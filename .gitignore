@@ -4,3 +4,4 @@
 *.pptx
 plots/
 scripts_backup/
+data/processed_data/*

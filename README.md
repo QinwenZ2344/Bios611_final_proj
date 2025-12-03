@@ -14,7 +14,8 @@ This project explores tennis match statistics from the ATP (Men's) and WTA (Wome
 
 ## Data Source
 
-The project relies on match data located in the `data/` directory.
+The project relies on match data located in the `data/` directory. Orignial datasets can be found at `https://github.com/JeffSackmann/tennis_{wta,atp}.git`.
+
 *   **Location:**
     *   `data/ATP/`: Contains CSV files for ATP matches (2020-2024), players, and rankings.
     *   `data/WTA/`: Contains CSV files for WTA matches (2020-2024), players, and rankings.
@@ -63,6 +64,10 @@ Once inside the Docker container, you can generate the final reports using the p
     ```bash
     make report.pdf
     ```
+*   **Generate Only Plots:**
+    ```bash
+    make plots
+    ```
 
 *   **Clean Up Generated Files:**
     ```bash
@@ -80,7 +85,7 @@ The analysis flow is as follows:
     *   `scripts/player_rank.r`: Generates ranking analysis plots.
     *   `scripts/miscluster_analysis.r`: Analyzes outliers and generates detailed finding documents.
 2.  **`make report.html`**: Compiles `report.Rmd` using `rmarkdown`, integrating the generated plots.
-3.  **`make report.pdf`**: Converts the HTML report to PDF using `scripts/html2pdf.r`.
+3.  **`make report.pdf`**: Compiles `report.Rmd` using `rmarkdown`, integrating the generated plots.
 
 ### Directory Layout
 *   `scripts/`: Contains all R scripts for data processing and analysis.

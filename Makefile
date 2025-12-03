@@ -12,8 +12,8 @@ plots:
 report.html: report.Rmd plots
 	Rscript -e "rmarkdown::render('report.Rmd', output_format = 'html_document')"
 
-report.pdf: report.html scripts/html2pdf.r
-	Rscript scripts/html2pdf.r
+report.pdf: report.Rmd plots
+	Rscript -e "rmarkdown::render('report.Rmd', output_format = 'pdf_document')"
 
 clean:
 	rm -f report.html report.pdf
