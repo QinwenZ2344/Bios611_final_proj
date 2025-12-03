@@ -24,13 +24,20 @@ The project relies on match data located in the `data/` directory.
 
 This project uses Docker to ensure a reproducible analysis environment.
 
-1.  **Build the Docker Image:**
+1.  **Clone Repo:**
     Run the following command in the root of the repository:
     ```bash
-    docker build -t bios611-project .
+    git clone https://github.com/QinwenZ2344/Bios611_final_proj.git
+    cd Bios611_final_proj
     ```
 
-2.  **Run the Container:**
+2.  **Build the Docker Image:**
+    Run the following command in the root of the repository:
+    ```bash
+    docker build . -t qinwen
+    ```
+
+3.  **Run the Container:**
     To run the analysis and ensure that generated reports/plots are saved back to your local machine, mount the current directory to `/work` inside the container:
     ```bash
     docker run --rm -v "$(pwd):/work" -it bios611-project /bin/bash

@@ -17,7 +17,7 @@ RUN R -e "install.packages(c('tidyverse','cluster','cowplot','pagedown'), lib='/
 
 WORKDIR /work
 
-COPY . /work
+COPY . /home/rstudio
 
 
 CMD ["/init"]
