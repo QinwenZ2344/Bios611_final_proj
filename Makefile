@@ -4,6 +4,7 @@
 all: report.html report.pdf
 
 plots:
+	mkdir -p plots
 	Rscript scripts/player_cluster.r
 	Rscript scripts/player_rank.r
 	Rscript scripts/miscluster_analysis.r

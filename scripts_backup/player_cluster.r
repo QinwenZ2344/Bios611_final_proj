@@ -6,7 +6,7 @@ library(tidyverse)
 library(cluster)
 
 # Define file paths
-data_dir <- "data"
+data_dir <- "/Users/homelab/Desktop/BIOS 611/data"
 
 # WTA Files
 wta_files <- c(
@@ -33,7 +33,7 @@ read_files_with_sex <- function(files, sex) {
   lapply(files, function(f) {
     if(file.exists(f)) {
         # Read all columns as character to avoid type mismatches
-        df <- read_csv(f, col_types = cols(.default = "c"))
+        df <- read_csv(f, col_types = cols(.default = "c"), show_col_types = FALSE)
         df$sex <- sex
         return(df)
     } else {

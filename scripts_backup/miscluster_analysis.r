@@ -5,7 +5,7 @@ library(tidyverse)
 library(cowplot)
 
 # Define file paths
-data_dir <- "data"
+data_dir <- "/Users/homelab/Desktop/BIOS 611/data"
 processed_file <- file.path(data_dir, "processed_data", "player_pca_clusters.csv")
 
 # Create documents directory if it doesn't exist
@@ -19,7 +19,7 @@ if (!file.exists(processed_file)) {
   stop("Processed data file not found. Please run scripts/player_cluster.r first.")
 }
 
-player_data <- read_csv(processed_file) %>%
+player_data <- read_csv(processed_file, show_col_types = FALSE) %>%
   mutate(player_id = as.character(player_id))
 message("Loaded player data with ", nrow(player_data), " players.")
 

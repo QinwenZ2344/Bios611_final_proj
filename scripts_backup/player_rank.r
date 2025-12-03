@@ -14,11 +14,11 @@ atp_players_path <- "data/ATP/atp_players.csv"
 # Function to read and tag
 read_data <- function(rank_path, player_path, sex_label) {
   # Read rankings
-  rankings <- read_csv(rank_path) %>%
+  rankings <- read_csv(rank_path, show_col_types = FALSE) %>%
     mutate(sex = sex_label)
     
   # Read players
-  players <- read_csv(player_path)
+  players <- read_csv(player_path, show_col_types = FALSE)
   
   # Join
   # Note: ATP/WTA player files might have slightly different columns or formats, 
@@ -69,6 +69,9 @@ p <- ggplot(combined_top, aes(x = reorder(full_name, -points), y = points, fill 
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.position = "none" # Hide legend as panels are labeled
   )
+
+# Display the plot
+print(p)
 
 # Save the plot
 if (!dir.exists("plots")) {
