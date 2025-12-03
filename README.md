@@ -44,7 +44,8 @@ This project uses Docker to ensure a reproducible analysis environment.
     docker run -v "$(pwd):/home/rstudio" -e PASSWORD='yourpassword' -p 8787:8787 qinwen
     ```
 
-    *   `-v "$(pwd):/work"`: You can use this to mount your current folder to `/work` inside the container so you can access the output files. 
+    *   `-v "$(pwd):/work"`: You can use this to mount your current folder to `/work` inside the container so you can access the output files.
+    *   Then go http://localhost:8787, with `yourpassword` as password if you just copy&paste using the default setting.
 
 ## Building the Report
 
