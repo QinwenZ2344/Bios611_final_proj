@@ -5,7 +5,7 @@
 This project explores tennis match statistics from the ATP (Men's) and WTA (Women's) tours from 2020 to 2024. The primary goal is to use unsupervised learning (PCA and K-Means Clustering) to:
 1.  Identify gender-based performance patterns.
 2.  Understand the statistical factors contributing to player success (Win Rate).
-3.  Investigate "mis-clustered" players (outliers) to understand stylistic differences between the tours.
+3.  Investigate "mis-clustered" players (outliers) to understand stylistic differences between players.
 
 **Key Findings:**
 *   **Different Styles:** The analysis effectively distinguishes between ATP and WTA players with 85.7% accuracy based solely on match statistics.
